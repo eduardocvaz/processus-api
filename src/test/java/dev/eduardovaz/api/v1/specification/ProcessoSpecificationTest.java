@@ -1,19 +1,11 @@
 package dev.eduardovaz.api.v1.specification;
 
-import dev.eduardovaz.api.v1.mapper.ProcessoMapper;
 import dev.eduardovaz.api.v1.model.Processo;
 import dev.eduardovaz.api.v1.model.enums.StatusProcesso;
-import dev.eduardovaz.api.v1.repository.ProcessoRepository;
-import dev.eduardovaz.api.v1.service.ProcessoService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

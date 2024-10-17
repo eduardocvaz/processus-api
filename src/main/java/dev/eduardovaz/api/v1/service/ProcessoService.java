@@ -9,7 +9,6 @@ import dev.eduardovaz.api.v1.repository.ProcessoRepository;
 import dev.eduardovaz.api.v1.specification.ProcessoSpecification;
 import dev.eduardovaz.core.base.BaseService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

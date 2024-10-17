@@ -3,7 +3,6 @@ package dev.eduardovaz.api.v1.service;
 import dev.eduardovaz.api.v1.dto.DocumentoDto;
 import dev.eduardovaz.api.v1.dto.DocumentoResponseDto;
 import dev.eduardovaz.api.v1.mapper.DocumentoMapper;
-import dev.eduardovaz.api.v1.model.Acao;
 import dev.eduardovaz.api.v1.model.Documento;
 import dev.eduardovaz.api.v1.repository.AcaoRepository;
 import dev.eduardovaz.api.v1.repository.DocumentoRepository;
