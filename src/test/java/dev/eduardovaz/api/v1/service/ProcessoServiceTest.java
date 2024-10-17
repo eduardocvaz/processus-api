@@ -6,19 +6,22 @@ import dev.eduardovaz.api.v1.mapper.ProcessoMapper;
 import dev.eduardovaz.api.v1.model.Processo;
 import dev.eduardovaz.api.v1.model.enums.StatusProcesso;
 import dev.eduardovaz.api.v1.repository.ProcessoRepository;
+import dev.eduardovaz.api.v1.specification.ProcessoSpecification;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -141,6 +144,67 @@ class ProcessoServiceTest {
         when(processoRepository.findById(processoId)).thenReturn(Optional.empty());
 
         assertThrows(ResponseStatusException.class, () -> processoService.obterProcesso(processoId));
+    }
+
+    @Test
+    void deveListarProcessos() {
+        List<Processo> processos = List.of(new Processo(), new Processo());
+        List<ProcessoResponseDto> processoResponseDtos = List.of(new ProcessoResponseDto(), new ProcessoResponseDto());
+
+        when(processoRepository.findAll()).thenReturn(processos);
+        when(processoMapper.toProcessoResponseDto(processos.get(0))).thenReturn(processoResponseDtos.get(0));
+        when(processoMapper.toProcessoResponseDto(processos.get(1))).thenReturn(processoResponseDtos.get(1));
+
+        List<ProcessoResponseDto> processosEncontrados = processoService.listarProcessos();
+
+        assertNotNull(processosEncontrados);
+        assertEquals(2, processosEncontrados.size());
+    }
+
+    @Test
+    void deveArquivarProcessos() {
+        List<Long> ids = List.of(1L, 2L);
+        List<Processo> processos = List.of(
+                new Processo("12345", LocalDate.now(), "Descrição", StatusProcesso.ATIVO, null),
+                new Processo("98765", LocalDate.now(), "Descrição", StatusProcesso.ATIVO, null)
+        );
+        processos.get(0).setId(1L);
+        processos.get(1).setId(2L);
+
+        when(processoRepository.findAllById(ids)).thenReturn(processos);
+
+        processoService.arquivar(ids);
+
+        assertEquals(StatusProcesso.ARQUIVADO, processos.get(0).getStatus());
+        assertEquals(StatusProcesso.ARQUIVADO, processos.get(1).getStatus());
+
+        verify(processoRepository).saveAll(processos);
+    }
+
+    @Test
+    void deveBuscarProcessos() {
+        Long id = 1L;
+        StatusProcesso status = StatusProcesso.ATIVO;
+        LocalDate dataInicio = LocalDate.of(2024, 1, 1);
+        LocalDate dataFim = LocalDate.of(2024, 12, 31);
+        String cpfCnpj = "12345678901";
+        List<Processo> processos = List.of(new Processo(), new Processo());
+        List<ProcessoResponseDto> processoResponseDtos = List.of(new ProcessoResponseDto(), new ProcessoResponseDto());
+
+        Specification<Processo> spec = ProcessoSpecification.buscarProcessos(id, status, dataInicio, dataFim, cpfCnpj);
+
+        // Usar any(Specification.class) no when
+        when(processoRepository.findAll(any(Specification.class))).thenReturn(processos);
+
+        when(processoMapper.toProcessoResponseDto(processos.get(0))).thenReturn(processoResponseDtos.get(0));
+        when(processoMapper.toProcessoResponseDto(processos.get(1))).thenReturn(processoResponseDtos.get(1));
+
+        List<ProcessoResponseDto> processosEncontrados = processoService.buscarProcessos(id, status, dataInicio, dataFim, cpfCnpj);
+
+        assertNotNull(processosEncontrados);
+        assertEquals(2, processosEncontrados.size());
+
+        verify(processoRepository).findAll(any(Specification.class)); // Verificar com any()
     }
 
 }

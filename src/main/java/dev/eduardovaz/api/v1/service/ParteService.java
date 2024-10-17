@@ -25,7 +25,8 @@ public class ParteService extends BaseService<Parte, ParteRepository> {
     private final ParteMapper parteMapper;
 
     @Autowired
-    private ProcessoRepository processoRepository;
+    ProcessoRepository processoRepository;
+
     public ParteResponseDto save(ParteDto parte) {
         // Validações de negócio, se necessário
         return parteMapper.toParteResponseDto(repository.save(parteMapper.toParte(parte)));

@@ -20,7 +20,7 @@ import java.util.List;
 public class AcaoService extends BaseService<Acao, AcaoRepository> {
 
     @Autowired
-    private ProcessoRepository processoRepository;
+    ProcessoRepository processoRepository;
 
     private final AcaoMapper acaoMapper;
 

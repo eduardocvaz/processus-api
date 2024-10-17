@@ -21,7 +21,7 @@ import java.util.List;
 public class DocumentoService extends BaseService<Documento, DocumentoRepository> {
 
     @Autowired
-    private AcaoRepository acaoRepository;
+    AcaoRepository acaoRepository;
 
     private final DocumentoMapper documentoMapper;
 
