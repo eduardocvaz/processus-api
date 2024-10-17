@@ -3,7 +3,6 @@ package dev.eduardovaz.api.v1.controller;
 import dev.eduardovaz.api.v1.dto.AtualizarStatusProcessoDto;
 import dev.eduardovaz.api.v1.dto.ProcessoDto;
 import dev.eduardovaz.api.v1.dto.ProcessoResponseDto;
-import dev.eduardovaz.api.v1.model.Processo;
 import dev.eduardovaz.api.v1.service.ProcessoService;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;

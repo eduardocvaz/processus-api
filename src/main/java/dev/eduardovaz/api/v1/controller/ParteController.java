@@ -2,7 +2,6 @@ package dev.eduardovaz.api.v1.controller;
 
 import dev.eduardovaz.api.v1.dto.ParteDto;
 import dev.eduardovaz.api.v1.dto.ParteResponseDto;
-import dev.eduardovaz.api.v1.model.Parte;
 import dev.eduardovaz.api.v1.service.ParteService;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;

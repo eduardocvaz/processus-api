@@ -11,21 +11,20 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 @Service
-public abstract class BaseService <Model extends BaseModel, Repository extends BaseRepository<Model>> {
+public abstract class BaseService <T extends BaseModel, R extends BaseRepository<T>> {
 
-    @Autowired
-    protected Repository repository;
+    public R repository;
 
 
     @SuppressWarnings("unchecked")
-    protected Class<Model> getPersistentClass(){
-        return (Class<Model>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    protected Class<T> getPersistentClass(){
+        return (Class<T>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
     /**
      * Retorna lista de objetos
      */
-    public List<Model> findAll() {
+    public List<T> findAll() {
         return repository.findAll();
     }
 
@@ -33,7 +32,7 @@ public abstract class BaseService <Model extends BaseModel, Repository extends B
     /**
      * Retorna lista de objetos de forma paginada
      */
-    public Page<Model> findAll(Pageable pageable) {
+    public Page<T> findAll(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
@@ -41,28 +40,23 @@ public abstract class BaseService <Model extends BaseModel, Repository extends B
      * Retorna um objeto de acordo com o seu id
      * @param id Id do objeto
      */
-    public Model findById(Long id) {
-        Model model = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Item com id: " + id + " não foi encontrado."));
-        return model;
+    public T findById(Long id) {
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Item com id: " + id + " não foi encontrado."));
     }
 
     /**
      * Adiciona novo registro
-     * @param model
-     * @return
      */
     @Transactional
-    public Model insert(Model model) {
+    public T insert(T model) {
         return repository.save(model);
     }
 
     /**
      * Atualiza registro
-     * @param model
-     * @return
      */
     @Transactional
-    public Model update(Model model) {
+    public T update(T model) {
         repository.findById(model.getId()).orElseThrow(() -> new EntityNotFoundException("Não encontrado!"));
         return repository.save(model);
     }
@@ -72,8 +66,8 @@ public abstract class BaseService <Model extends BaseModel, Repository extends B
      */
     @Transactional
     public void delete(Long id) {
-        repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado!"));
-        repository.deleteById(id);
+        T entity = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado!"));
+        repository.delete(entity);
     }
 
 }

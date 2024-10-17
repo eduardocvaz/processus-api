@@ -10,10 +10,11 @@ import dev.eduardovaz.api.v1.repository.DocumentoRepository;
 import dev.eduardovaz.core.base.BaseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,9 +25,12 @@ public class DocumentoService extends BaseService<Documento, DocumentoRepository
 
     private final DocumentoMapper documentoMapper;
 
+    private static final String DOCUMENTO_NAO_ENCONTRADO = "Documento não encontrado";
+
     public DocumentoResponseDto criarDocumento(Long acaoId, DocumentoDto documentoDto) {
-        Acao acao = acaoRepository.findById(acaoId)
-                .orElseThrow(() -> new RuntimeException("Ação não encontrada"));
+        if (!acaoRepository.existsById(acaoId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ação não encontrada");
+        }
 
         documentoDto.setAcaoId(acaoId);
         return documentoMapper.toDocumentoResponseDto(repository.save(documentoMapper.toDocumento(documentoDto)));
@@ -38,17 +42,18 @@ public class DocumentoService extends BaseService<Documento, DocumentoRepository
 
     public Documento obterDocumento(Long documentoId) {
         return repository.findById(documentoId)
-                .orElseThrow(() -> new RuntimeException("Documento não encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, DOCUMENTO_NAO_ENCONTRADO));
     }
 
     public DocumentoResponseDto obterDocumentoResponseDto(Long documentoId) {
         return documentoMapper.toDocumentoResponseDto(repository.findById(documentoId)
-                .orElseThrow(() -> new RuntimeException("Documento não encontrado")));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, DOCUMENTO_NAO_ENCONTRADO)));
     }
 
     public DocumentoResponseDto atualizarDocumento(Long documentoId, DocumentoDto documentoDto) {
-        Documento documento = repository.findById(documentoId)
-                .orElseThrow(() -> new RuntimeException("Documento não encontrado"));
+        if (!repository.existsById(documentoId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, DOCUMENTO_NAO_ENCONTRADO);
+        }
 
         return documentoMapper.toDocumentoResponseDto(repository.save(documentoMapper.toDocumento(documentoDto)));
     }

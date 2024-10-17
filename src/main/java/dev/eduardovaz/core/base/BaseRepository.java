@@ -11,12 +11,12 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 @NoRepositoryBean
-public interface BaseRepository <Model extends BaseModel> extends JpaRepository<Model, Long> {
+public interface BaseRepository <T extends BaseModel> extends JpaRepository<T, Long> {
     @Query(value = "select e from #{#entityName} e where e.id=:id and e.deletedAt is null")
-    Optional<Model> findById(@Param("id") Long id);
+    Optional<T> findById(@Param("id") Long id);
 
     @Query(value = "select e from #{#entityName} e where e.deletedAt is null order by e.id")
-    Page<Model> findAll(Pageable pageable);
+    Page<T> findAll(Pageable pageable);
 
     @Modifying
     @Query(value = "update #{#entityName} e set e.deletedAt = CURRENT_TIMESTAMP where e.id=:id and e.deletedAt is null")

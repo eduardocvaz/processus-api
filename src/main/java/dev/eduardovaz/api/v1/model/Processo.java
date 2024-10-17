@@ -37,9 +37,4 @@ public class Processo extends BaseModel {
             uniqueConstraints = @UniqueConstraint(columnNames = {"processo_id", "parte_id"})
     )
     private List<Parte> partes;
-
-//    @OneToMany(mappedBy = "processo")
-//    private List<Acao> acoes;
-
-    // Construtores, getters e setters
 }

@@ -1,9 +1,7 @@
 package dev.eduardovaz.api.v1.mapper;
 
-import dev.eduardovaz.api.v1.dto.AcaoResponseDto;
 import dev.eduardovaz.api.v1.dto.DocumentoDto;
 import dev.eduardovaz.api.v1.dto.DocumentoResponseDto;
-import dev.eduardovaz.api.v1.model.Acao;
 import dev.eduardovaz.api.v1.model.Documento;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

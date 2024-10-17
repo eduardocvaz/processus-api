@@ -12,7 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Documento extends BaseModel {
-    @Column(name = "nome", nullable = false, length = 255)
+    @Column(name = "nome", nullable = false)
     private String nome;
 
     @Column(name = "tipo", nullable = false, length = 100)

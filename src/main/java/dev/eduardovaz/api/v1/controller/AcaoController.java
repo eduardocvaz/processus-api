@@ -2,7 +2,6 @@ package dev.eduardovaz.api.v1.controller;
 
 import dev.eduardovaz.api.v1.dto.AcaoDto;
 import dev.eduardovaz.api.v1.dto.AcaoResponseDto;
-import dev.eduardovaz.api.v1.model.Acao;
 import dev.eduardovaz.api.v1.service.AcaoService;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
