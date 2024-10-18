@@ -38,13 +38,4 @@
 * **Documentação da API (Swagger):**
   [https://www.processus.eduardovaz.dev/swagger-ui/index.html#/](https://www.processus.eduardovaz.dev/swagger-ui/index.html#/)
 
-**Observações:**
-
-* Substitua `[Image of Diagrama de Classes]` e `[Image of Diagrama de
-  Arquitetura]` pelos nomes dos seus arquivos de imagem.
-* Certifique-se de que os arquivos de imagem estejam no mesmo diretório
-  do arquivo `README.md` ou em um subdiretório.
-* Você pode adicionar mais informações ao README, como instruções de
-  instalação, exemplos de uso, informações de contato, etc.
-
 
